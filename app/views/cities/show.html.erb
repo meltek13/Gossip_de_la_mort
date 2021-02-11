@@ -1,0 +1,26 @@
+<div class = "text-center mt-5 fs-3">
+<H1>ville  : <%= @cities.name %></H1>
+<h1>code postale : <%= @cities.zip_code %></h1>
+<>
+<p><% Gossip.all.each do |gossip| %>
+<% if gossip.user.city.id == @cities.id %>
+<p>title : <%=gossip.title%></p>
+<p>content : <%=gossip.content%></p>
+<%if current_user%>
+       <% pre_like = gossip.likes.find { |like| like.user_id == current_user.id} %>
+         <% if pre_like %>
+            <%= button_to 'Unlike', gossip_like_path(gossip, pre_like), method: :delete %>
+         <% else %>
+            <%= button_to 'Like', gossip_likes_path(gossip), method: :post %> 
+         <% end %>
+<%end%>
+
+<p><%= gossip.likes.count %> <%= (gossip.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+
+
+<%end%>
+<%end%>
+</p>
+
+<p><a href="/welcome" class="btn btn-outline-warning">Retour à l'accueil</a></p>
+</div>

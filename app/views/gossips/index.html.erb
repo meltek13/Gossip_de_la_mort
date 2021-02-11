@@ -1,0 +1,47 @@
+
+
+<div class=welcome>
+
+<div class="text-center">
+<H1 class="text-center mb-4 mt-0">Bienvenue <strong><%=@name%></strong> Sur The Gossip Project.</H1>
+
+    <H5 class="text-center mb-4 mt-4">  Les derniers gossips. </H5>
+
+    <a type="button" href="/gossips/new" class="btn btn-warning btn-lg">Créer ton Gossip</a>
+    </div>
+    
+<div class="row m-4">
+    <% @gossips.each_with_index do |a, i|%>
+    <br>
+    <div class="col-sm-4 mt-4 ">
+
+        <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title"> Title : <%=a.title%> </h5>
+            <br>
+            <br>
+            <p class="card-text">Author : <%= a.user.first_name %> </p>
+            <br>
+            <br>
+            <p>nombres de commentaires : <%= a.comments.count%></p>
+            <%if current_user%>
+             <% pre_like = a.likes.find { |like| like.user_id == current_user.id} %>
+                  <% if pre_like %>
+                <%= button_to 'Unlike', gossip_like_path(a, pre_like), method: :delete %>
+                  <% else %>
+                  <%= button_to 'Like', gossip_likes_path(a), method: :post %> 
+                <% end %>
+                <p><%= a.likes.count %> <%= (a.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+                <%end%>
+
+            <a href= "/gossips/<%=a.id%>/" class="btn btn-outline-warning">Voir le gossip n°<%=i + 1%></a>
+            
+        </div>
+        </div>
+    </div>
+ <% end %>
+</div>
+</div>
+
+
+

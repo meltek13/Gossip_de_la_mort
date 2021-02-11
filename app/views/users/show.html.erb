@@ -1,0 +1,16 @@
+
+
+<div class = "text-center mt-5 fs-3">
+<p><%= @users.first_name %>
+<%= @users.last_name %></p>
+<a href="/cities/<%=@users.city.id%>" class="btn btn-outline-warning"><%= @users.city.name %></a>
+<p><%= @users.age %> ans</p>
+<p>E-mail : <%= @users.email %></p>
+<p><%= @users.description %></p>
+<p><a href="/welcome" class="btn btn-outline-warning">Retour à l'accueil</a>
+</p>
+</div>
+
+
+
+

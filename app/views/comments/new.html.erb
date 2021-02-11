@@ -1,0 +1,13 @@
+
+<h3>Laisse un commentaire</h3>
+<%= form_tag url_for(action: 'create'), method: "post" do %>
+
+  <div class="form-group">
+        
+        <%= text_area_tag 'content', nil, rows: 6, placeholder: 'Ecrit ton commentaire...', class: 'form-control'%>
+  </div>
+  
+
+  <%= submit_tag "envoyer", class: 'btn btn-primary' %>
+
+<% end %>

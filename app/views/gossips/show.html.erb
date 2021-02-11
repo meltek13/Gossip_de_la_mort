@@ -1,0 +1,73 @@
+
+<div class="card mb-2">
+   <img class="card-img-top" src="https://picsum.photos/id/1010/1600/300" alt="Card image cap">
+  <div class="card-body pt-5 pb-5">
+    <h3><%= @gossips.title %></h3>
+                <br/>
+                  <p class="card-text">"<%= @gossips.content %>"</p>
+                  créé par <a href="/users/<%=@gossips.user.id%>" class="text-warning"><%=@gossips.user.first_name%> <%=@gossips.user.last_name%></a>
+                  <br/>
+                  le <%= @gossips.user.created_at %>
+                  <br/>
+                  à <a href="/cities/<%=@gossips.user.city.id%>" class="text-warning"><%=@gossips.user.city.name%> </a>
+                  <br/><br/>
+
+           <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <%if @gossips.user == current_user%>
+                    <a href="/gossips/<%=@gossips.id%>/edit">
+                      <button type="button" class="btn btn-sm btn-outline-warning">edit</button>
+                      </a>
+                      <a href="/gossips/<%=@gossips.id%>" data-confirm="êtes-vous sur?" data-method="DELETE">
+                      <button type="button" class="btn btn-sm btn-outline-danger">delete</button>
+                      </a>
+                      <%end%>
+                      <a href="/gossips/<%=@gossips.id%>/comments/new">
+                      <button type="button" class="btn btn-sm btn-outline-warning">comment</button>
+                      </a>
+                    
+                     
+                <%if current_user%>
+                <% pre_like = @gossips.likes.find { |like| like.user_id == current_user.id} %>
+                  <% if pre_like %>
+                <%= button_to 'Unlike', gossip_like_path(@gossips, pre_like), method: :delete %>
+                  <% else %>
+                  <%= button_to  'Like', gossip_likes_path(@gossips), method: :post %> 
+                <% end %>
+                <p><%= @gossips.likes.count %> <%= (@gossips.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+                <%end%>
+                
+                
+                
+                
+                </div>
+                    <small class="text-muted"></small>
+           </div>
+  </div>
+</div>
+
+ <div class="col-md-12">     
+   <div>
+   <h3>Commentaires</h3>
+     <%Comment.all.each do |i|%>
+         <%if i.gossip.id == @gossips.id%>
+         <p><%=i.user.first_name%> :</p>
+         <%=i.content%>
+          <%if @gossips.user == current_user%>
+         <a href="/gossips/<%=@gossips.id%>/comments/<%=i.id %>/edit/" class="btn btn-outline-warning"> edit </a>
+         <a href="/gossips/<%=@gossips.id%>/comments/<%=i.id%>" class="btn btn-outline-danger" data-confirm="êtes-vous sur?" data-method="DELETE"> X </a>       
+         <br/>
+         
+         <%end%>
+         
+         <%end%>
+     <%end%>
+   </div>
+ </div>
+</div>
+
+
+
+<p> <a href="/welcome" class="btn btn-outline-warning">Retour à l'accueil</a></p>
+
+
